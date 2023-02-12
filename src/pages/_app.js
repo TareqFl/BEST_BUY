@@ -1,5 +1,47 @@
-import '@/styles/globals.css'
+// import '@/styles/globals.css'
+import "@fontsource/ubuntu";
+import "@fontsource/roboto-mono";
+import "@/styles/styles.css";
+import { CssBaseline } from "@mui/material";
+import { Provider } from "react-redux";
+import { store, wrapper } from "../reducer";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import AppBarComponents from "@/comps/AppBar/AppBarComponents";
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+const customTheme = createTheme({
+  palette: {
+    primary: {
+      main: "#023c29",
+    },
+    secondary: {
+      main: "#1b961d",
+    },
+    whiteCream: {
+      main: "#f6f6f6",
+    },
+    textColor: {
+      main: "#333",
+    },
+    lightPink: {
+      main: "#fcf0e4",
+    },
+  },
+  typography: {
+    fontFamily: ["Ubuntu", "Roboto", "sans-serif"].join(","),
+  },
+});
+
+function App({ Component, pageProps }) {
+  return (
+    <Provider store={store}>
+      <CssBaseline />
+      <ThemeProvider theme={customTheme}>
+        <AppBarComponents>
+          <Component {...pageProps} />
+        </AppBarComponents>
+      </ThemeProvider>
+    </Provider>
+  );
 }
+
+export default wrapper.withRedux(App);
