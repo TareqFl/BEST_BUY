@@ -13,26 +13,12 @@ import { COLOR } from "@/styles/theme";
 import { useRouter } from "next/router";
 import { ClickAwayListener } from "@mui/base";
 import { User_data } from "@/context";
-import { getCookie } from "cookies-next";
 
 export default function DisplayCart() {
   const { cart, setCart } = React.useContext(User_data);
 
   const [openMenu, setMenu] = React.useState(false);
   const router = useRouter();
-
-  React.useEffect(() => {
-    if (!cart) {
-      let stored_Cart = getCookie("cart");
-      let fact = JSON.parse(stored_Cart);
-      if (fact.items) {
-        console.log("cookie cart exists");
-        setCart([...fact.items]);
-      }
-    }
-
-    // eslint-disable-next-line
-  }, [cart]);
 
   return (
     <ClickAwayListener

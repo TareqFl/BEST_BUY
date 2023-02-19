@@ -7,7 +7,7 @@ export default function Context({ children }) {
     username: null,
     HandleDrawer: false,
   });
-  const [cart, setCart] = useState(false);
+  const [cart, setCart] = useState([]);
   const [search, setSearch] = useState([]);
   const [allProducts, setAllProducts] = useState(false);
   const [sortProducts, setSortProducts] = useState([]);

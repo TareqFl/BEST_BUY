@@ -1,12 +1,19 @@
 import Loader from "@/comps/loader/Loader";
 import LeftSide from "@/comps/purchase/LeftSide";
 import RightSide from "@/comps/purchase/RightSide";
+import { User_data } from "@/context";
 import { Box } from "@mui/material";
+import { useRouter } from "next/router";
 import React from "react";
-import { useSelector } from "react-redux";
 
 const Purchase = () => {
-  const { BuyBool } = useSelector((state) => state);
+  const { cart } = React.useContext(User_data);
+  const router = useRouter();
+  React.useEffect(() => {
+    if (!cart) {
+      router.push("/");
+    }
+  }, []);
 
   return (
     <Box
@@ -14,18 +21,17 @@ const Purchase = () => {
         display: "flex",
         flexDirection: "column",
         padding: "5%",
-        gap: 2,
+        // gap: 2,
         position: "relative",
       }}
     >
-      {BuyBool && <Loader />}
-      <Box sx={{ display: "flex" }}>BreadCrumbs</Box>
+      {/* {BuyBool && <Loader />} */}
       <Box
         id="Main Container"
-        sx={{ display: "flex", flexDirection: "row", gap: 8 }}
+        sx={{ display: "flex", flexDirection: "row", gap: 0 }}
       >
-        <LeftSide />
-        {/* <RightSide /> */}
+        <LeftSide cart={cart} />
+        <RightSide cart={cart} />
       </Box>
     </Box>
   );

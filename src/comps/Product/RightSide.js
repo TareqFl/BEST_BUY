@@ -16,7 +16,7 @@ import { useContext } from "react";
 import { getCookie, removeCookies, setCookie } from "cookies-next";
 const RightSide = ({ title, description, rating, price, stock, Product }) => {
   const { push } = useRouter();
-  const { user, setUser, cart, setCart } = useContext(User_data);
+  const { cart, setCart } = useContext(User_data);
 
   const [addQuantity, setQuantity] = React.useState(1);
 
@@ -195,9 +195,8 @@ const RightSide = ({ title, description, rating, price, stock, Product }) => {
           sx={{ width: "50%", fontSize: { xs: "0.6rem", sm: "1rem" } }}
           variant="contained"
           onClick={() => {
-            // push("/purchase");
-            removeCookies("cart");
-            setCart([]);
+            handleCart();
+            push("/purchase");
           }}
         >
           Buy Now

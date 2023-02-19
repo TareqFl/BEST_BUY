@@ -8,13 +8,11 @@ import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Slide } from "@mui/material";
-import { useSelector } from "react-redux";
 import Link from "next/link";
 import { COLOR } from "@/styles/theme";
+import { User_data } from "@/context";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -27,6 +25,8 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function RecipeReviewCard({ Product, value }) {
+  const { HandleDrawer } = React.useContext(User_data);
+
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -46,8 +46,6 @@ export default function RecipeReviewCard({ Product, value }) {
     thumbnail,
     images,
   } = Product;
-
-  const { HandleDrawer } = useSelector((state) => state);
 
   return (
     <Card

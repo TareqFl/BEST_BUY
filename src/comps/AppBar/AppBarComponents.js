@@ -1,11 +1,11 @@
 import { COLOR } from "@/styles/theme";
 import { Box } from "@mui/material";
 import React from "react";
-import { useSelector } from "react-redux";
 import NavBar from "./NavBar";
+import { User_data } from "@/context";
 
 const AppBarComponents = ({ children }) => {
-  const { HandleDrawer } = useSelector((state) => state);
+  const { HandleDrawer } = React.useContext(User_data);
 
   return (
     <Box

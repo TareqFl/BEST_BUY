@@ -31,19 +31,33 @@ const customTheme = createTheme({
   },
 });
 
+// function App({ Component, pageProps }) {
+//   return (
+//     <Provider store={store}>
+//       <CssBaseline />
+//       <Context>
+//         <ThemeProvider theme={customTheme}>
+//           <AppBarComponents>
+//             <Component {...pageProps} />
+//           </AppBarComponents>
+//         </ThemeProvider>
+//       </Context>
+//     </Provider>
+//   );
+// }
 function App({ Component, pageProps }) {
   return (
-    <Provider store={store}>
-      <CssBaseline />
-      <Context>
-        <ThemeProvider theme={customTheme}>
-          <AppBarComponents>
-            <Component {...pageProps} />
-          </AppBarComponents>
-        </ThemeProvider>
-      </Context>
-    </Provider>
+    <Context>
+      <ThemeProvider theme={customTheme}>
+        <CssBaseline />
+        <AppBarComponents>
+          <Component {...pageProps} />
+        </AppBarComponents>
+      </ThemeProvider>
+    </Context>
   );
 }
 
-export default wrapper.withRedux(App);
+// export default wrapper.withRedux(App);
+
+export default App;

@@ -211,25 +211,25 @@ export default Home;
 
 export async function getServerSideProps({ req, res }) {
   try {
-    const cookieFound = hasCookie("token", { req, res });
-    if (!cookieFound) {
-      return {
-        redirect: {
-          destination: "/login",
-        },
-      };
-    }
+    // const cookieFound = hasCookie("token", { req, res });
+    // if (!cookieFound) {
+    //   return {
+    //     redirect: {
+    //       destination: "/login",
+    //     },
+    //   };
+    // }
     const getProducts = await fetch("http://localhost:3000/api/product");
     const data = await getProducts.json();
 
-    const getCategories = await fetch("http://localhost:3000/api/category");
-    const categ = await getCategories.json();
+    // const getCategories = await fetch("http://localhost:3000/api/category");
+    // const categ = await getCategories.json();
 
-    const categories = categ.map((c) => c.categories);
-    const brands = data.map((d) => d.brand);
-    const ratings = data.map((d) => d.rating);
+    // const categories = data.map((c) => c.categories);
+    // const brands = data.map((d) => d.brand);
+    // const ratings = data.map((d) => d.rating);
     return {
-      props: { data, categories, brands, ratings },
+      props: { data },
     };
   } catch (error) {
     return {

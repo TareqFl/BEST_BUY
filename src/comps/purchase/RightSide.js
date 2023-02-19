@@ -10,24 +10,45 @@ import {
 } from "@mui/material";
 import { FaAmazon, FaCcVisa, FaPaypal, FaCcMastercard } from "react-icons/fa";
 import { COLOR } from "@/styles/theme";
-import { useDispatch } from "react-redux";
 import { buy_boolean } from "../../actions";
-const CustomStack = ({ text }) => (
-  <Stack
-    display="flex"
-    direction="row"
-    justifyContent="start"
-    alignItems="center"
-  >
-    <Radio />
-    <Typography sx={{ fontSize: "0.7rem", fontWeight: "bold" }}>
-      {text}
-    </Typography>
-  </Stack>
-);
+import { ClickAwayListener } from "@mui/base";
+import { User_data } from "@/context";
+const CustomStack = ({ text }) => {
+  const [clicked, setClicked] = React.useState(false);
+  return (
+    <ClickAwayListener onClickAway={() => setClicked(false)}>
+      <Stack
+        display="flex"
+        direction="row"
+        justifyContent="start"
+        alignItems="center"
+      >
+        <Radio checked={clicked} onChange={() => setClicked(true)} />
+        <Typography sx={{ fontSize: "0.7rem", fontWeight: "bold" }}>
+          {text}
+        </Typography>
+      </Stack>
+    </ClickAwayListener>
+  );
+};
 
-const RightSide = () => {
-  const dispatch = useDispatch();
+const RightSide = ({ cart }) => {
+  // const { cart } = React.useContext(User_data);
+
+  const [amount, setAmount] = React.useState(0);
+  const [totalAmount, setTotalAmount] = React.useState(0);
+  const [shipping, setShipping] = React.useState(0);
+  const [discount, setDiscount] = React.useState(0);
+  React.useEffect(() => {
+    cart.forEach((item) => {
+      setAmount((prevValue) => {
+        return prevValue + item.quantity * item.price;
+      });
+    });
+
+    setShipping(Math.floor(Math.random() * 10));
+    setDiscount(Math.floor(Math.random() * 100));
+  }, [cart]);
 
   return (
     <Paper
@@ -110,25 +131,28 @@ const RightSide = () => {
       </Stack>
 
       <Stack display={"flex"} direction="row" justifyContent="space-between">
-        <Typography fontWeight="bold">Sub Total</Typography>
-        <Typography fontWeight="bold">$0</Typography>
+        <Typography fontWeight="bold">Total</Typography>
+        <Typography fontWeight="bold">${amount}</Typography>
       </Stack>
       <Stack display={"flex"} direction="row" justifyContent="space-between">
         <Typography fontWeight="bold">Tax(10%)</Typography>
-        <Typography fontWeight="bold">$0</Typography>
+        <Typography fontWeight="bold">${Math.floor(amount * 0.1)}</Typography>
       </Stack>
       <Stack display={"flex"} direction="row" justifyContent="space-between">
         <Typography fontWeight="bold">Coupon Discount</Typography>
-        <Typography fontWeight="bold">$0</Typography>
+        <Typography fontWeight="bold">${discount}</Typography>
       </Stack>
       <Stack display={"flex"} direction="row" justifyContent="space-between">
         <Typography fontWeight="bold">Shipping cost</Typography>
-        <Typography fontWeight="bold">$0</Typography>
+        <Typography fontWeight="bold">${shipping}</Typography>
       </Stack>
+
       <Divider />
       <Stack display={"flex"} direction="row" justifyContent="space-between">
-        <Typography fontWeight="bold">Shipping cost</Typography>
-        <Typography fontWeight="bold">$0</Typography>
+        <Typography fontWeight="bold">Net Total</Typography>
+        <Typography fontWeight="bold">
+          ${amount + Math.floor(amount * 0.1) + shipping - discount}
+        </Typography>
       </Stack>
 
       <Button
@@ -136,7 +160,7 @@ const RightSide = () => {
         sx={{ borderRadius: 24, padding: 2 }}
         onClick={() => dispatch(buy_boolean(true))}
       >
-        Pay $12154
+        Pay
       </Button>
     </Paper>
   );

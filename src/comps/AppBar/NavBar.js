@@ -27,26 +27,23 @@ import {
 import DisplayCart from "./DisplayCart";
 
 export default function NavBar() {
-  const { user, setUser, HandleDrawer } = React.useContext(User_data);
+  const { HandleDrawer, cart, setCart } = React.useContext(User_data);
 
   const router = useRouter();
 
   const [username, setUsername] = React.useState("");
 
   React.useEffect(() => {
-    const { pathname, push } = router;
-    if (pathname !== "/login") {
-      const validate = hasCookie("token");
-      if (!validate) {
-        return push("/login");
-      }
-      const cookeh = getCookie("token");
-      if (cookeh) {
-        const { username } = JSON.parse(cookeh);
-        return setUsername(username);
-      }
+    let stored_Cart = getCookie("cart");
+    let fact = stored_Cart ? JSON.parse(stored_Cart) : false;
+    if (fact.items) {
+      return setCart([...fact.items]);
+    } else {
+      return setCart([]);
     }
-  }, [router]);
+
+    // eslint-disable-next-line
+  }, []);
 
   if (router.pathname === "/login") {
     return <div></div>;

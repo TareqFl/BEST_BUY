@@ -1,19 +1,13 @@
+import { User_data } from "@/context";
 import { Box, Paper, Stack, Typography } from "@mui/material";
-import { padding } from "@mui/system";
 import React from "react";
-import { useSelector } from "react-redux";
+import CartDetails from "./CartDetails";
 
-const LeftSide = () => {
-  const { Cart } = useSelector((state) => state);
-
-  const { purchaseNow, totalItems } = Cart;
-
-  const { title, thumbnail, price } = purchaseNow;
-
+const LeftSide = ({ cart }) => {
   return (
     <Box
       sx={{
-        // flexGrow: 2,
+        flexGrow: 1,
         display: "flex",
         flexDirection: "column",
         gap: 4,
@@ -29,7 +23,7 @@ const LeftSide = () => {
           flexDirection: "column",
           alignItems: "center",
           height: "375px",
-          width: "100%",
+          width: "50%",
           padding: "16px",
           gap: 2,
           overflow: "auto",
@@ -40,53 +34,26 @@ const LeftSide = () => {
         >
           Review Item And Shipping
         </Typography>
-        <Box
+        <Stack
+          display="flex"
+          direction="column"
+          spacing={2}
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 2,
+            overflowY: "auto",
+            height: "100%",
             width: "100%",
           }}
         >
-          <Box
-            sx={{
-              height: { xs: "100px", md: "200px" },
-              width: { xs: "100px", md: "200px" },
-            }}
-          >
-            <img src={thumbnail} alt={title} height="100%" width="100%" />
-          </Box>
-          <Box
-            id="ITEM DETAILS"
-            sx={{ height: "100px", width: "50%", backgroundColor: "red" }}
-          >
-            <Typography
-              sx={{
-                fontWeight: "bold",
-                fontSize: { xs: "0.7rem", md: "0.9rem" },
-              }}
-            >
-              {title}
-            </Typography>
-            <Typography
-              sx={{
-                fontWeight: "bold",
-                fontSize: { xs: "0.7rem", md: "0.9rem" },
-              }}
-            >
-              Price ${price}
-            </Typography>
-            <Typography
-              sx={{
-                fontWeight: "bold",
-                fontSize: { xs: "0.7rem", md: "0.9rem" },
-              }}
-            >
-              Quantity:
-            </Typography>
-          </Box>
-        </Box>
+          {cart.map((item, index) => (
+            <CartDetails
+              key={index}
+              title={item.title}
+              price={item.price}
+              quantity={item.quantity}
+              thumbnail={item.thumbnail}
+            />
+          ))}
+        </Stack>
       </Paper>
 
       {/* Bill Address */}
@@ -104,7 +71,7 @@ const LeftSide = () => {
       >
         <Box id=" title">
           <Typography sx={{ fontWeight: "bold", fontSize: "1.5rem" }}>
-            Deliver Information
+            Address Information
           </Typography>
         </Box>
 
