@@ -1,19 +1,137 @@
 import { COLOR } from "@/styles/theme";
 import { Search } from "@mui/icons-material";
-import { Box, IconButton, InputBase } from "@mui/material";
+import {
+  Box,
+  ButtonBase,
+  IconButton,
+  InputBase,
+  Paper,
+  Typography,
+} from "@mui/material";
+import { User_data } from "@/context";
 import React from "react";
+import { width } from "@mui/system";
+import { useRouter } from "next/router";
+import _ from "lodash";
+import { ClickAwayListener } from "@mui/base";
+const SearchBar = () => {
+  const router = useRouter();
 
-const SearchBar = ({ onChange, value }) => {
+  const { search, setSearch, allProducts } = React.useContext(User_data);
   const [clicked, setClicked] = React.useState(false);
+  const [keyWord, setKeyWord] = React.useState("");
+
+  function handleChange(event) {
+    const { value } = event.target;
+    setKeyWord(value);
+    let searchedProduct = allProducts.filter((product) =>
+      product.title.toLowerCase().includes(keyWord.toLowerCase())
+    );
+    let brandsSearch = allProducts.filter((product) =>
+      product.brand.toLowerCase().includes(keyWord.toLowerCase())
+    );
+    let categorySearch = allProducts.filter((product) =>
+      product.category.toLowerCase().includes(keyWord.toLowerCase())
+    );
+
+    let mixed = _.uniq([
+      ...searchedProduct,
+      ...brandsSearch,
+      ...categorySearch,
+    ]);
+    setSearch(mixed);
+  }
+
+  const SearchOutPut = () => {
+    return (
+      <ClickAwayListener onClickAway={() => setKeyWord("")}>
+        <Paper
+          elevation={12}
+          sx={{
+            width: keyWord !== "" ? "450px" : 0,
+            height: keyWord !== "" ? "300px" : 0,
+            backgroundColor: COLOR.whiteCream,
+            position: "absolute",
+            zIndex: 10,
+            top: "50px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            overflowY: "scroll",
+            gap: 2,
+            padding: keyWord !== "" ? 2 : 0,
+            "&::-ebkit-scrollbar": {
+              width: "2px",
+              backgroundColor: "red",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: COLOR.primary,
+              width: "2px",
+            },
+          }}
+        >
+          {search?.map((prd, index) => {
+            return (
+              <ButtonBase
+                key={index}
+                sx={{
+                  height: "150px",
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: 2,
+                  backgroundColor: COLOR.charcoalLight,
+                }}
+                onClick={() => {
+                  router.push(`/product?id=${prd.id}`);
+                  setClicked(false);
+                  setKeyWord("");
+                }}
+              >
+                <Box
+                  sx={{
+                    width: "50%",
+                    height: "100%",
+                    objectFit: "fill",
+                    backgroundColor: "#333",
+                    overflow: "hidden",
+                    img: {
+                      objectFit: "fill",
+                      display: "block",
+                      height: "100%",
+                      width: "100%",
+                    },
+                  }}
+                >
+                  <img src={prd.thumbnail} />
+                </Box>
+                <Box
+                  sx={{
+                    width: "50%",
+                  }}
+                >
+                  <Typography>{prd.title}</Typography>
+                </Box>
+              </ButtonBase>
+            );
+          })}
+        </Paper>
+      </ClickAwayListener>
+    );
+  };
 
   return (
     <Box
       sx={{
-        width: { xs: "275px", sm: "350px", md: "200px", lg: "275px" },
+        width: { xs: "275px", sm: "350px", md: "200px", lg: "300px" },
         display: "flex",
         justifyContent: "flex-end",
+        position: "relative",
       }}
     >
+      <SearchOutPut />
       <Box
         sx={{
           width: "auto",
@@ -23,7 +141,13 @@ const SearchBar = ({ onChange, value }) => {
           borderRadius: 4,
         }}
       >
-        <IconButton size="large" onClick={() => setClicked(!clicked)}>
+        <IconButton
+          size="large"
+          onClick={() => {
+            setClicked(!clicked);
+            setKeyWord("");
+          }}
+        >
           <Search fontSize="medium" sx={{ color: COLOR.textColor }} />
         </IconButton>
         <InputBase
@@ -38,8 +162,8 @@ const SearchBar = ({ onChange, value }) => {
             },
             transition: "0.75s",
           }}
-          value={value}
-          onChange={onChange}
+          value={keyWord}
+          onChange={handleChange}
         />
       </Box>
     </Box>

@@ -6,13 +6,12 @@ import Logo from "../../assets/ddd-removebg-preview.png";
 import Image from "next/image";
 import { COLOR } from "@/styles/theme";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { useSelector } from "react-redux";
 import CustomDrawer from "./CustomDrawer";
 import SearchBar from "../SearchBar";
 import { useRouter } from "next/router";
 import { getCookie, hasCookie } from "cookies-next";
 import BurgerMenu from "../BurgerMenu";
-
+import { User_data } from "@/context";
 import {
   AppBar,
   Box,
@@ -21,11 +20,15 @@ import {
   Typography,
   Badge,
   ButtonBase,
+  Paper,
+  Stack,
+  Button,
 } from "@mui/material";
+import DisplayCart from "./DisplayCart";
 
 export default function NavBar() {
-  const { HandleDrawer, Cart } = useSelector((state) => state);
-  const { totalItems } = Cart;
+  const { user, setUser, HandleDrawer } = React.useContext(User_data);
+
   const router = useRouter();
 
   const [username, setUsername] = React.useState("");
@@ -57,6 +60,8 @@ export default function NavBar() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        backgroundColor: HandleDrawer ? COLOR.lightPink : "white",
+        transition: "all 0.75s",
       }}
     >
       <TopBar />
@@ -109,27 +114,16 @@ export default function NavBar() {
               justifyContent: "space-evenly",
             }}
           >
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+            <ButtonBase
+              onClick={() => {
+                const element = document.getElementById("Deals");
+                if (element) {
+                  element.scrollIntoView({
+                    behavior: "smooth",
+                  });
+                }
               }}
             >
-              <Typography
-                sx={{
-                  fontWeight: "bold",
-                  fontSize: { sm: "0.8rem", md: "1rem" },
-                }}
-              >
-                Categories
-              </Typography>
-              <IconButton>
-                <KeyboardArrowDown />
-              </IconButton>
-            </Box>
-
-            <ButtonBase>
               <Typography
                 sx={{
                   fontWeight: "bold",
@@ -160,15 +154,7 @@ export default function NavBar() {
               </Typography>
             </ButtonBase>
           </Box>
-          {/* <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search> */}
+
           <SearchBar />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <ButtonBase
@@ -189,15 +175,7 @@ export default function NavBar() {
                 {username}
               </Typography>
             </ButtonBase>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={totalItems} color="error">
-                <AiOutlineShoppingCart />
-              </Badge>
-            </IconButton>
+            <DisplayCart />
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <BurgerMenu />

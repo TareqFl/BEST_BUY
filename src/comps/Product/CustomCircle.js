@@ -10,8 +10,8 @@ const CustomCircle = ({ color1, color2 }) => {
       sx={{
         borderRadius: 50,
         overflow: "hidden",
-        height: "50px",
-        width: "50px",
+        height: { xs: "25px", sm: "50px" },
+        width: { xs: "25px", sm: "50px" },
         border: clicked ? `2px solid ${COLOR.primary}` : "none",
         cursor: "pointer",
         display: "flex",

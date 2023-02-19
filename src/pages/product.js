@@ -17,7 +17,6 @@ const Product = ({ Product }) => {
     thumbnail,
     title,
   } = Product;
-
   return (
     <Box
       id="container"
@@ -26,6 +25,8 @@ const Product = ({ Product }) => {
         flexDirection: "column",
         gap: 4,
         padding: "0 5%",
+        height: "100vh",
+        backgroundColor: "transparent",
       }}
     >
       <Box
@@ -35,7 +36,6 @@ const Product = ({ Product }) => {
           flexDirection: "row",
           gap: 2,
           padding: "16px 0",
-          // backgroundColor: "red",
         }}
       >
         <Typography>BreadCrumbs</Typography>
@@ -45,7 +45,7 @@ const Product = ({ Product }) => {
         sx={{
           display: "flex",
           flexDirection: "row",
-          gap: 8,
+          gap: { xs: 1, sm: 4, md: 8 },
         }}
       >
         <LeftSide images={images} Product={Product} />

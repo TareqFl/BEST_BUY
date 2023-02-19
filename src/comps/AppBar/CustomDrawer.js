@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import { COLOR } from "@/styles/theme";
 import { PersonOutlined, KeyboardArrowDown } from "@mui/icons-material";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { User_data } from "@/context";
 const CustomDrawer = () => {
-  const { HandleDrawer } = useSelector((state) => state);
+  const { user, HandleDrawer } = React.useContext(User_data);
+
   return (
     <Paper
       sx={{

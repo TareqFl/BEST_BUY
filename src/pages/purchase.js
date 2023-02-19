@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
 
-const purchase = () => {
+const Purchase = () => {
   const { BuyBool } = useSelector((state) => state);
 
   return (
@@ -25,10 +25,10 @@ const purchase = () => {
         sx={{ display: "flex", flexDirection: "row", gap: 8 }}
       >
         <LeftSide />
-        <RightSide />
+        {/* <RightSide /> */}
       </Box>
     </Box>
   );
 };
 
-export default purchase;
+export default Purchase;

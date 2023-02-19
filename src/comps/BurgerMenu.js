@@ -1,15 +1,13 @@
-import { handleDrawer } from "@/actions";
 import { Box, IconButton } from "@mui/material";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-
+import { User_data } from "@/context";
 const BurgerMenu = () => {
-  const dispatch = useDispatch();
-  const { HandleDrawer } = useSelector((state) => state);
+  const { user, setUser, HandleDrawer, setHandleDrawer } =
+    React.useContext(User_data);
 
   return (
     <IconButton
-      onClick={() => dispatch(handleDrawer())}
+      onClick={() => setHandleDrawer(!HandleDrawer)}
       sx={{
         display: "flex",
         justifyContent: "center",

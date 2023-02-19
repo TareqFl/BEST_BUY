@@ -11,19 +11,17 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { removeCookies, hasCookie } from "cookies-next";
-import NavBar from "../comps/AppBar/NavBar";
-import { useSelector } from "react-redux";
 import { COLOR, PADDING, FONTS } from "@/styles/theme";
 import girl from "../assets/girl1nobg.png";
 import Image from "next/image";
 import CategoryButton from "@/comps/CategoryButton";
-import GridCard from "@/comps/GridCard";
 import CustomCard from "@/comps/CustomCard";
 import Footer from "@/comps/Footer";
-function Home({ data, categories, brands, ratings }) {
+import { User_data } from "@/context";
+function Home({ data }) {
   const router = useRouter();
 
-  const { HandleDrawer } = useSelector((state) => state);
+  const { HandleDrawer } = React.useContext(User_data);
 
   const handleClick = () => {
     removeCookies("token");
@@ -38,8 +36,8 @@ function Home({ data, categories, brands, ratings }) {
     return () => setZoom(false);
   }, []);
 
-  //INITIAL : 24
-  const [loadMore, setLoadMore] = React.useState(6);
+  //INITIAL : 36
+  const [loadMore, setLoadMore] = React.useState(4);
   function handleMore() {
     if (loadMore < 100) {
       setLoadMore((prev) => {
@@ -47,6 +45,17 @@ function Home({ data, categories, brands, ratings }) {
       });
     }
   }
+
+  const { setAllProducts, sortProducts, setSortProducts } =
+    React.useContext(User_data);
+
+  React.useEffect(() => {
+    if (data) {
+      setAllProducts(data);
+      setSortProducts(data);
+    }
+  }, []);
+
   return (
     <Box
       sx={{
@@ -139,10 +148,9 @@ function Home({ data, categories, brands, ratings }) {
             }}
             disabled={"true"}
           />
-          <CategoryButton Text="Brand" />
-          <CategoryButton Text="Price" />
-          <CategoryButton Text="Rating" />
-          <CategoryButton Text="Deals" />
+          <CategoryButton Text="Categories" filter={"category"} />
+          <CategoryButton Text="Brands" filter={"brands"} />
+          <CategoryButton Text="All Products" filter={"all"} />
           <Box sx={{ flexGrow: 1 }}></Box>
         </Box>
         {/* </Fade> */}
@@ -155,30 +163,31 @@ function Home({ data, categories, brands, ratings }) {
             alignSelf: "start",
           }}
         >
-          Headphones For You!
+          Best Deals For You!
         </Typography>
 
-        <Stack
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            flexWrap: "wrap",
-            width: "100%",
-            gap: { xs: 2, md: 4 },
-            overflow: "hidden",
-          }}
-        >
-          {data?.map((product, index) => {
-            return (
-              index < loadMore && (
-                // <GridCard key={index} value={zoom} Product={product} />
-                <CustomCard key={index} value={zoom} Product={product} />
-              )
-            );
-          })}
-        </Stack>
+        <div id="Deals">
+          <Stack
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              flexWrap: "wrap",
+              width: "100%",
+              gap: { xs: 2, md: 4 },
+              overflow: "hidden",
+            }}
+          >
+            {sortProducts?.map((product, index) => {
+              return (
+                index < loadMore && (
+                  <CustomCard key={index} value={zoom} Product={product} />
+                )
+              );
+            })}
+          </Stack>
+        </div>
         <Button
           variant="contained"
           sx={{ borderRadius: 24 }}

@@ -1,7 +1,7 @@
 import { ADDTOCART, BUY_NOW, CLEAR_CART } from "../actions/types";
 
 const INITIAL_STATE = {
-  items: null,
+  items: [],
   discount: false,
   username: null,
   totalItems: 0,

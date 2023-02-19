@@ -11,7 +11,16 @@ const LeftSide = () => {
   const { title, thumbnail, price } = purchaseNow;
 
   return (
-    <Box sx={{ flexGrow: 2, display: "flex", flexDirection: "column", gap: 4 }}>
+    <Box
+      sx={{
+        // flexGrow: 2,
+        display: "flex",
+        flexDirection: "column",
+        gap: 4,
+        alignItems: "center",
+        // overflow: "hidden",
+      }}
+    >
       <Paper
         id="displayitems"
         elevation={2}
@@ -26,7 +35,9 @@ const LeftSide = () => {
           overflow: "auto",
         }}
       >
-        <Typography sx={{ fontWeight: "bold", fontSize: "2.5rem" }}>
+        <Typography
+          sx={{ fontWeight: "bold", fontSize: { xs: "1rem", md: "1.5rem" } }}
+        >
           Review Item And Shipping
         </Typography>
         <Box
@@ -34,32 +45,44 @@ const LeftSide = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            width: "100%",
             gap: 2,
-            img: {
-              height: "200px",
-              width: "200px",
-              objectFit: "contain",
-            },
+            width: "100%",
           }}
         >
-          <img src={thumbnail} alt={title} />
-          <Box id="item name" sx={{ height: "100px", width: "100px" }}>
-            {title}
-          </Box>
           <Box
-            id="price and Quantity"
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              height: "100px",
-              width: "100px",
+              height: { xs: "100px", md: "200px" },
+              width: { xs: "100px", md: "200px" },
             }}
           >
-            <Typography sx={{ fontWeight: "bold", fontSize: "1.5rem" }}>
-              ${price}
+            <img src={thumbnail} alt={title} height="100%" width="100%" />
+          </Box>
+          <Box
+            id="ITEM DETAILS"
+            sx={{ height: "100px", width: "50%", backgroundColor: "red" }}
+          >
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                fontSize: { xs: "0.7rem", md: "0.9rem" },
+              }}
+            >
+              {title}
             </Typography>
-            <Typography sx={{ fontWeight: "bold", fontSize: "1.5rem" }}>
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                fontSize: { xs: "0.7rem", md: "0.9rem" },
+              }}
+            >
+              Price ${price}
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                fontSize: { xs: "0.7rem", md: "0.9rem" },
+              }}
+            >
               Quantity:
             </Typography>
           </Box>
@@ -101,15 +124,15 @@ const LeftSide = () => {
           <input
             autoCapitalize="off"
             autoComplete="off"
-            autoCorrect="false"
-            autoFocus="false"
+            autoCorrect="off"
+            autoFocus="off"
             placeholder="First Name"
           />
           <input
             autoCapitalize="off"
             autoComplete="off"
-            autoCorrect="false"
-            autoFocus="false"
+            autoCorrect="off"
+            autoFocus="off"
             placeholder="Last Name"
           />
         </Stack>
@@ -122,8 +145,8 @@ const LeftSide = () => {
           <input
             autoCapitalize="off"
             autoComplete="off"
-            autoCorrect="false"
-            autoFocus="false"
+            autoCorrect="off"
+            autoFocus="off"
             placeholder="Address"
           />
         </Stack>
@@ -143,15 +166,15 @@ const LeftSide = () => {
           <input
             autoCapitalize="off"
             autoComplete="off"
-            autoCorrect="false"
-            autoFocus="false"
+            autoCorrect="off"
+            autoFocus="off"
             placeholder="City/Town"
           />
           <input
             autoCapitalize="off"
             autoComplete="off"
-            autoCorrect="false"
-            autoFocus="false"
+            autoCorrect="off"
+            autoFocus="off"
             placeholder="Zip Code*"
           />
         </Stack>
@@ -171,15 +194,15 @@ const LeftSide = () => {
           <input
             autoCapitalize="off"
             autoComplete="off"
-            autoCorrect="false"
-            autoFocus="false"
+            autoCorrect="off"
+            autoFocus="off"
             placeholder="Mobile*"
           />
           <input
             autoCapitalize="off"
             autoComplete="off"
-            autoCorrect="false"
-            autoFocus="false"
+            autoCorrect="off"
+            autoFocus="off"
             placeholder="Email"
           />
         </Stack>

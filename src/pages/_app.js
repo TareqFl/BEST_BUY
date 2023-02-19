@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { store, wrapper } from "../reducer";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AppBarComponents from "@/comps/AppBar/AppBarComponents";
-
+import Context from "@/context";
 const customTheme = createTheme({
   palette: {
     primary: {
@@ -35,11 +35,13 @@ function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <CssBaseline />
-      <ThemeProvider theme={customTheme}>
-        <AppBarComponents>
-          <Component {...pageProps} />
-        </AppBarComponents>
-      </ThemeProvider>
+      <Context>
+        <ThemeProvider theme={customTheme}>
+          <AppBarComponents>
+            <Component {...pageProps} />
+          </AppBarComponents>
+        </ThemeProvider>
+      </Context>
     </Provider>
   );
 }

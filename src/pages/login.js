@@ -12,7 +12,7 @@ const Login = () => {
     const api = "192.168.1.16";
     const api2 = "192.168.151.18";
     const api3 = "192.168.1.32";
-    const response = await fetch(`http://${api}:3000/api/login`, {
+    const response = await fetch(`http://${api3}:3000/api/login`, {
       method: "POST",
       body: JSON.stringify(form),
     });
