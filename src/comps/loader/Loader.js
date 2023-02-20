@@ -5,24 +5,28 @@ import { useDispatch } from "react-redux";
 import { buy_boolean } from "@/actions";
 import styles from "./styles.module.css";
 import { useRouter } from "next/router";
+import { User_data } from "@/context";
+import { removeCookies } from "cookies-next";
 const Loader = () => {
-  const dispatch = useDispatch();
+  const { setBuyBool, setCart } = React.useContext(User_data);
 
   const [loader, setLoader] = React.useState(1);
 
   const router = useRouter();
 
   React.useEffect(() => {
-    const prchase = setTimeout(() => setLoader(0), 3000);
+    const prchase = setTimeout(() => setLoader(0), 2500);
 
     return () => clearTimeout(prchase);
   }, []);
 
   React.useEffect(() => {
     const turnOff = setTimeout(() => {
-      dispatch(buy_boolean(false));
+      setBuyBool(false);
       router.push("/");
-    }, 5000);
+      removeCookies("cart");
+      setCart([]);
+    }, 3000);
 
     return () => clearTimeout(turnOff);
   }, []);

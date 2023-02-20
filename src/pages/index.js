@@ -1,16 +1,7 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Grid,
-  Zoom,
-  Slide,
-  Fade,
-  Stack,
-} from "@mui/material";
+import { Box, Typography, Button, Slide, Stack } from "@mui/material";
 import { useRouter } from "next/router";
-import { removeCookies, hasCookie } from "cookies-next";
+import { removeCookies, setCookie } from "cookies-next";
 import { COLOR, PADDING, FONTS } from "@/styles/theme";
 import girl from "../assets/girl1nobg.png";
 import Image from "next/image";
@@ -21,12 +12,8 @@ import { User_data } from "@/context";
 function Home({ data }) {
   const router = useRouter();
 
-  const { HandleDrawer } = React.useContext(User_data);
-
-  const handleClick = () => {
-    removeCookies("token");
-    router.reload();
-  };
+  const { HandleDrawer, setAllProducts, setSortProducts } =
+    React.useContext(User_data);
 
   const [zoom, setZoom] = React.useState(false);
 
@@ -37,7 +24,7 @@ function Home({ data }) {
   }, []);
 
   //INITIAL : 36
-  const [loadMore, setLoadMore] = React.useState(4);
+  const [loadMore, setLoadMore] = React.useState(36);
   function handleMore() {
     if (loadMore < 100) {
       setLoadMore((prev) => {
@@ -46,21 +33,23 @@ function Home({ data }) {
     }
   }
 
-  const { setAllProducts, sortProducts, setSortProducts } =
-    React.useContext(User_data);
+  const { sortProducts } = React.useContext(User_data);
 
   React.useEffect(() => {
     if (data) {
       setAllProducts(data);
       setSortProducts(data);
     }
-  }, []);
+
+    // eslint-disable-next-line
+  }, [data]);
 
   return (
     <Box
       sx={{
         backgroundColor: HandleDrawer ? COLOR.lightPink : "white",
         transition: "0.5s",
+        paddingTop: "25%",
       }}
     >
       {/* <NavBar /> */}
@@ -136,7 +125,10 @@ function Home({ data }) {
           sx={{
             width: "100%",
             alignItems: "center",
-            display: { xs: "none", md: "flex" },
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "space-between",
+            flexWrap: "wrap",
             gap: 3,
           }}
         >
@@ -219,21 +211,19 @@ export async function getServerSideProps({ req, res }) {
     //     },
     //   };
     // }
+
     const getProducts = await fetch("http://localhost:3000/api/product");
     const data = await getProducts.json();
 
     // const getCategories = await fetch("http://localhost:3000/api/category");
     // const categ = await getCategories.json();
 
-    // const categories = data.map((c) => c.categories);
-    // const brands = data.map((d) => d.brand);
-    // const ratings = data.map((d) => d.rating);
     return {
       props: { data },
     };
   } catch (error) {
     return {
-      props: {},
+      props: { err: error.message },
     };
   }
 }

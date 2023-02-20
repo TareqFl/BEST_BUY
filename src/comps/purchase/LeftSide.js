@@ -7,7 +7,6 @@ const LeftSide = ({ cart }) => {
   return (
     <Box
       sx={{
-        flexGrow: 1,
         display: "flex",
         flexDirection: "column",
         gap: 4,
@@ -23,7 +22,7 @@ const LeftSide = ({ cart }) => {
           flexDirection: "column",
           alignItems: "center",
           height: "375px",
-          width: "50%",
+          width: "100%",
           padding: "16px",
           gap: 2,
           overflow: "auto",
@@ -44,13 +43,14 @@ const LeftSide = ({ cart }) => {
             width: "100%",
           }}
         >
-          {cart.map((item, index) => (
+          {cart?.map((item, index) => (
             <CartDetails
               key={index}
               title={item.title}
               price={item.price}
               quantity={item.quantity}
               thumbnail={item.thumbnail}
+              index={index}
             />
           ))}
         </Stack>
@@ -58,7 +58,7 @@ const LeftSide = ({ cart }) => {
 
       {/* Bill Address */}
 
-      <Paper
+      {/* <Paper
         elevation={2}
         sx={{
           width: "100%",
@@ -71,7 +71,7 @@ const LeftSide = ({ cart }) => {
       >
         <Box id=" title">
           <Typography sx={{ fontWeight: "bold", fontSize: "1.5rem" }}>
-            Address Information
+            Adress Information
           </Typography>
         </Box>
 
@@ -173,7 +173,7 @@ const LeftSide = ({ cart }) => {
             placeholder="Email"
           />
         </Stack>
-      </Paper>
+      </Paper> */}
     </Box>
   );
 };

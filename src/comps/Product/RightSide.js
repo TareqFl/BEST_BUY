@@ -61,6 +61,32 @@ const RightSide = ({ title, description, rating, price, stock, Product }) => {
       return setCart([...all_Products]);
     }
   };
+
+  function handleBuy() {
+    let all_Products = cart && [...cart];
+    let index;
+    let exists = false;
+    let updated_item;
+    if (!cart.length) {
+      setCart([{ ...Product, quantity: addQuantity }]);
+      return push("/purchase");
+    }
+    cart.forEach((item, indx) => {
+      if (item.title === title) {
+        index = indx;
+        exists = true;
+      }
+    });
+
+    if (!exists) {
+      all_Products.push({ ...Product, quantity: addQuantity });
+      setCart([...all_Products]);
+      return push("/purchase");
+    }
+
+    return push("/purchase");
+  }
+
   React.useEffect(() => {
     setCookie("cart", { items: cart }, { maxAge: 604800 });
   }, [cart]);
@@ -158,20 +184,33 @@ const RightSide = ({ title, description, rating, price, stock, Product }) => {
             borderRadius: 12,
           }}
         >
-          <IconButton onClick={handleSubstraction}>
-            <Remove sx={{ color: COLOR.primary }} />
+          <IconButton
+            onClick={handleSubstraction}
+            // sx={{ height: 36, width: 36 }}
+          >
+            <Remove
+              sx={{
+                color: COLOR.primary,
+                fontSize: { xs: "1.4rem", sm: "1.8rem" },
+              }}
+            />
           </IconButton>
           <Typography
             sx={{
               color: COLOR.primary,
               fontWeight: "bold",
-              fontSize: "1.5rem",
+              fontSize: { xs: "1rem", sm: "1.5rem" },
             }}
           >
             {addQuantity}
           </Typography>
           <IconButton onClick={handleAddition}>
-            <Add sx={{ color: COLOR.primary }} />
+            <Add
+              sx={{
+                color: COLOR.primary,
+                fontSize: { xs: "1.4rem", sm: "1.8rem" },
+              }}
+            />
           </IconButton>
         </Box>
         <Box id="Stock Information">
@@ -194,10 +233,7 @@ const RightSide = ({ title, description, rating, price, stock, Product }) => {
         <Button
           sx={{ width: "50%", fontSize: { xs: "0.6rem", sm: "1rem" } }}
           variant="contained"
-          onClick={() => {
-            handleCart();
-            push("/purchase");
-          }}
+          onClick={handleBuy}
         >
           Buy Now
         </Button>

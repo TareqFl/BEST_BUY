@@ -1,15 +1,23 @@
 import React from "react";
 import { Box, Paper, IconButton, Badge, Typography } from "@mui/material";
-import { useSelector } from "react-redux";
 import { COLOR } from "@/styles/theme";
-import { PersonOutlined, KeyboardArrowDown } from "@mui/icons-material";
+import {
+  PersonOutlined,
+  KeyboardArrowDown,
+  KeyboardArrowLeft,
+} from "@mui/icons-material";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { User_data } from "@/context";
+import { useRouter } from "next/router";
+import { ClickAwayListener } from "@mui/base";
 const CustomDrawer = () => {
-  const { user, HandleDrawer } = React.useContext(User_data);
+  const { user, HandleDrawer, cart, setHandleDrawer } =
+    React.useContext(User_data);
+  const router = useRouter();
 
   return (
     <Paper
+      id="drawer"
       sx={{
         display: {
           xs: "flex",
@@ -21,7 +29,7 @@ const CustomDrawer = () => {
         height: "100vh",
         borderRadius: 0,
         position: "fixed",
-        zIndex: 10,
+        zIndex: 15,
         left: HandleDrawer ? 0 : -450,
         top: 0,
         bottom: 0,
@@ -30,6 +38,20 @@ const CustomDrawer = () => {
       }}
       elevation={4}
     >
+      <IconButton
+        onClick={() => setHandleDrawer(false)}
+        size="small"
+        sx={{
+          position: "absolute",
+          top: 5,
+          right: 10,
+          backgroundColor: COLOR.whiteCream,
+          transform: HandleDrawer ? "rotate(180deg)" : "rotate(0deg)",
+          transition: "1.25s",
+        }}
+      >
+        <KeyboardArrowLeft />
+      </IconButton>
       <Box
         sx={{
           height: "90%",
@@ -49,8 +71,8 @@ const CustomDrawer = () => {
           <IconButton size="large">
             <PersonOutlined fontSize="large" sx={{ color: "white" }} />
           </IconButton>
-          <IconButton size="large">
-            <Badge badgeContent={24} color="error">
+          <IconButton size="large" onClick={() => router.push("/purchase")}>
+            <Badge badgeContent={cart.length} color="error">
               <AiOutlineShoppingCart
                 style={{ fontSize: "2.1875rem", color: "white" }}
               />
@@ -58,7 +80,7 @@ const CustomDrawer = () => {
           </IconButton>
         </Box>
 
-        <Box
+        {/* <Box
           sx={{
             display: "flex",
             alignItems: "center",
@@ -69,7 +91,7 @@ const CustomDrawer = () => {
           <IconButton>
             <KeyboardArrowDown sx={{ color: "white" }} />
           </IconButton>
-        </Box>
+        </Box> */}
         <Typography color="white">Deals</Typography>
         <Typography color="white">What's New</Typography>
         <Typography color="white">Delivery</Typography>

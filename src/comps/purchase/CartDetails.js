@@ -1,8 +1,40 @@
-import { Typography } from "@mui/material";
+import { User_data } from "@/context";
+import { COLOR } from "@/styles/theme";
+import { Add, Delete, Remove } from "@mui/icons-material";
+import { Fab, IconButton, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { setCookie } from "cookies-next";
 import React from "react";
+import _ from "lodash";
+const CartDetails = ({ thumbnail, title, price, quantity, index }) => {
+  const { cart, setCart } = React.useContext(User_data);
 
-const CartDetails = ({ thumbnail, title, price, quantity }) => {
+  function handleAddition() {
+    let all_products = cart;
+    let captured_product = all_products[index];
+    captured_product.quantity = captured_product.quantity + 1;
+    setCookie("cart", { items: cart }, { maxAge: 604800 });
+    return setCart([...all_products]);
+  }
+  function handleMinus() {
+    let all_products = cart;
+    let captured_product = all_products[index];
+    if (captured_product.quantity === 1) {
+      return;
+    }
+    captured_product.quantity = captured_product.quantity - 1;
+    setCookie("cart", { items: cart }, { maxAge: 604800 });
+    return setCart([...all_products]);
+  }
+
+  function handleRemove() {
+    let all_products = _.remove(cart, (item, i) => {
+      return i !== index;
+    });
+    setCookie("cart", { items: all_products }, { maxAge: 604800 });
+    return setCart([...all_products]);
+  }
+
   return (
     <Box
       sx={{
@@ -11,8 +43,18 @@ const CartDetails = ({ thumbnail, title, price, quantity }) => {
         justifyContent: "space-between",
         gap: 2,
         width: "100%",
+        position: "relative",
+        backgroundColor: COLOR.whiteCream,
+        height: "150px",
       }}
     >
+      <Fab
+        size="small"
+        sx={{ position: "absolute", top: "4px", right: "8px" }}
+        onClick={handleRemove}
+      >
+        <Delete fontSize="small" sx={{ color: COLOR.red }} />
+      </Fab>
       {/* Left SIde */}
       <Box
         sx={{
@@ -24,7 +66,13 @@ const CartDetails = ({ thumbnail, title, price, quantity }) => {
       </Box>
 
       {/* Right Side */}
-      <Box id="ITEM DETAILS" sx={{ height: "100px", width: "50%" }}>
+      <Box
+        id="ITEM DETAILS"
+        sx={{
+          height: "100px",
+          width: "50%",
+        }}
+      >
         <Typography
           sx={{
             fontWeight: "bold",
@@ -41,14 +89,23 @@ const CartDetails = ({ thumbnail, title, price, quantity }) => {
         >
           Price: ${price}
         </Typography>
-        <Typography
+        {/* <Typography
           sx={{
             fontWeight: "bold",
             fontSize: { xs: "0.7rem", md: "0.9rem" },
           }}
         >
           Quantity: {quantity}
-        </Typography>
+        </Typography> */}
+        <Stack display="flex" direction="row" alignItems="center">
+          <IconButton onClick={handleMinus}>
+            <Remove />
+          </IconButton>
+          {quantity}
+          <IconButton onClick={handleAddition}>
+            <Add />
+          </IconButton>
+        </Stack>
       </Box>
     </Box>
   );

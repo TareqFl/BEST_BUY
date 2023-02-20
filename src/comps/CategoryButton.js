@@ -124,10 +124,10 @@ const CategoryButton = ({
             borderRadius: 4,
             position: "absolute",
             backgroundColor: COLOR.whiteCream,
-            width: clicked ? "200px" : 0,
+            width: { xs: clicked ? "100px" : 0, sm: clicked ? "200px" : 0 },
             height: clicked ? "150px" : 0,
-            top: "40px",
-            left: "65px",
+            top: { xs: 0, sm: "40px" },
+            left: { xs: "120px", sm: "65px" },
             zIndex: 2,
             display: clicked ? "flex" : "none",
             flexDirection: "column",
@@ -145,7 +145,7 @@ const CategoryButton = ({
           sx={{
             ml: 1,
             fontWeight: "bold",
-            fontSize: { md: "0.6rem", lg: "1rem" },
+            // fontSize: { xs: "0.7rem", sm: "1rem" },
           }}
         >
           {Text}
@@ -160,9 +160,14 @@ const CategoryButton = ({
             }
             return;
           }}
+          sx={{
+            height: { xs: 28, sm: 38 },
+            width: { xs: 28, sm: 38 },
+          }}
         >
           <KeyboardArrowRight
             sx={{
+              // fontSize: { xs: "1.3rem", sm: "1.5rem" },
               transform: !disabled ? clicked && "rotate(90deg)" : "none",
               transition: "0.35s",
             }}

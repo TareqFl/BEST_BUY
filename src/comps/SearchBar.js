@@ -24,13 +24,13 @@ const SearchBar = () => {
   function handleChange(event) {
     const { value } = event.target;
     setKeyWord(value);
-    let searchedProduct = allProducts.filter((product) =>
+    let searchedProduct = allProducts?.filter((product) =>
       product.title.toLowerCase().includes(keyWord.toLowerCase())
     );
-    let brandsSearch = allProducts.filter((product) =>
+    let brandsSearch = allProducts?.filter((product) =>
       product.brand.toLowerCase().includes(keyWord.toLowerCase())
     );
-    let categorySearch = allProducts.filter((product) =>
+    let categorySearch = allProducts?.filter((product) =>
       product.category.toLowerCase().includes(keyWord.toLowerCase())
     );
 
@@ -48,7 +48,10 @@ const SearchBar = () => {
         <Paper
           elevation={12}
           sx={{
-            width: keyWord !== "" ? "450px" : 0,
+            width: {
+              xs: keyWord !== "" ? "225px" : 0,
+              sm: keyWord !== "" ? "450px" : 0,
+            },
             height: keyWord !== "" ? "300px" : 0,
             backgroundColor: COLOR.whiteCream,
             position: "absolute",
@@ -112,7 +115,9 @@ const SearchBar = () => {
                     width: "50%",
                   }}
                 >
-                  <Typography>{prd.title}</Typography>
+                  <Typography sx={{ fontSize: { xs: "0.75rem", sm: "1rem" } }}>
+                    {prd.title}
+                  </Typography>
                 </Box>
               </ButtonBase>
             );

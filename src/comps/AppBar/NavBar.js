@@ -1,49 +1,24 @@
 import * as React from "react";
 
-import { KeyboardArrowDown, PersonOutlined } from "@mui/icons-material";
+import { PersonOutlined } from "@mui/icons-material";
 import TopBar from "./TopBar";
 import Logo from "../../assets/ddd-removebg-preview.png";
 import Image from "next/image";
 import { COLOR } from "@/styles/theme";
-import { AiOutlineShoppingCart } from "react-icons/ai";
 import CustomDrawer from "./CustomDrawer";
 import SearchBar from "../SearchBar";
 import { useRouter } from "next/router";
-import { getCookie, hasCookie } from "cookies-next";
 import BurgerMenu from "../BurgerMenu";
 import { User_data } from "@/context";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Typography,
-  Badge,
-  ButtonBase,
-  Paper,
-  Stack,
-  Button,
-} from "@mui/material";
+import { AppBar, Box, Toolbar, Typography, ButtonBase } from "@mui/material";
 import DisplayCart from "./DisplayCart";
 
-export default function NavBar() {
-  const { HandleDrawer, cart, setCart } = React.useContext(User_data);
+const NavBar = () => {
+  const { HandleDrawer } = React.useContext(User_data);
 
   const router = useRouter();
 
   const [username, setUsername] = React.useState("");
-
-  React.useEffect(() => {
-    let stored_Cart = getCookie("cart");
-    let fact = stored_Cart ? JSON.parse(stored_Cart) : false;
-    if (fact.items) {
-      return setCart([...fact.items]);
-    } else {
-      return setCart([]);
-    }
-
-    // eslint-disable-next-line
-  }, []);
 
   if (router.pathname === "/login") {
     return <div></div>;
@@ -64,10 +39,12 @@ export default function NavBar() {
       <TopBar />
       <AppBar
         elevation={0}
-        position="static"
+        // position="static"
         color="whiteCream"
         sx={{
-          width: "90%",
+          position: { xs: "fixed", md: "static" },
+          width: { xs: "100%", md: "90%" },
+          zIndex: 1,
           backgroundColor: HandleDrawer ? COLOR.lightPink : "white",
           transition: "0.5s",
         }}
@@ -174,7 +151,7 @@ export default function NavBar() {
             </ButtonBase>
             <DisplayCart />
           </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ display: { xs: "flex", md: "none" } }} id="menu">
             <BurgerMenu />
           </Box>
         </Toolbar>
@@ -183,4 +160,6 @@ export default function NavBar() {
       <CustomDrawer />
     </Box>
   );
-}
+};
+
+export default NavBar;

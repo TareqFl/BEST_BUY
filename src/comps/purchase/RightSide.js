@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { FaAmazon, FaCcVisa, FaPaypal, FaCcMastercard } from "react-icons/fa";
 import { COLOR } from "@/styles/theme";
-import { buy_boolean } from "../../actions";
 import { ClickAwayListener } from "@mui/base";
 import { User_data } from "@/context";
 const CustomStack = ({ text }) => {
@@ -33,28 +32,27 @@ const CustomStack = ({ text }) => {
 };
 
 const RightSide = ({ cart }) => {
-  // const { cart } = React.useContext(User_data);
+  const { buyBool, setBuyBool } = React.useContext(User_data);
 
   const [amount, setAmount] = React.useState(0);
   const [totalAmount, setTotalAmount] = React.useState(0);
   const [shipping, setShipping] = React.useState(0);
   const [discount, setDiscount] = React.useState(0);
   React.useEffect(() => {
+    setAmount(0);
     cart.forEach((item) => {
-      setAmount((prevValue) => {
-        return prevValue + item.quantity * item.price;
-      });
+      setAmount((prevValue) => prevValue + item.quantity * item.price);
     });
-
     setShipping(Math.floor(Math.random() * 10));
-    setDiscount(Math.floor(Math.random() * 100));
+    setDiscount(Math.floor(Math.random() * 600));
+    setTotalAmount();
   }, [cart]);
 
   return (
     <Paper
       elevation={2}
       sx={{
-        flexGrow: 0.5,
+        flexGrow: 1,
         display: "flex",
         flexDirection: "column",
         gap: 4,
@@ -63,15 +61,10 @@ const RightSide = ({ cart }) => {
           padding: 2,
           outline: "none",
           border: `1px solid ${COLOR.primary}`,
+          width: "100%",
         },
       }}
     >
-      <Box id="title">
-        <Typography sx={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-          Order Summary
-        </Typography>
-      </Box>
-
       <Typography sx={{ fontSize: "1.5rem", fontWeight: "bold" }}>
         Payment Details
       </Typography>
@@ -130,6 +123,12 @@ const RightSide = ({ cart }) => {
         <input placeholder="CVC" />
       </Stack>
 
+      <Box id="title">
+        <Typography sx={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+          Order Summary
+        </Typography>
+      </Box>
+
       <Stack display={"flex"} direction="row" justifyContent="space-between">
         <Typography fontWeight="bold">Total</Typography>
         <Typography fontWeight="bold">${amount}</Typography>
@@ -158,7 +157,7 @@ const RightSide = ({ cart }) => {
       <Button
         variant="contained"
         sx={{ borderRadius: 24, padding: 2 }}
-        onClick={() => dispatch(buy_boolean(true))}
+        onClick={() => setBuyBool(true)}
       >
         Pay
       </Button>

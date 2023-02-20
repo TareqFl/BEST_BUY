@@ -3,17 +3,19 @@ import LeftSide from "@/comps/purchase/LeftSide";
 import RightSide from "@/comps/purchase/RightSide";
 import { User_data } from "@/context";
 import { Box } from "@mui/material";
+import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import React from "react";
 
 const Purchase = () => {
-  const { cart } = React.useContext(User_data);
+  const { buyBool, cart } = React.useContext(User_data);
   const router = useRouter();
-  React.useEffect(() => {
-    if (!cart) {
-      router.push("/");
-    }
-  }, []);
+
+  // React.useEffect(() => {
+  //   if (!cart.length) {
+  //     router.push("/");
+  //   }
+  // });
 
   return (
     <Box
@@ -21,14 +23,18 @@ const Purchase = () => {
         display: "flex",
         flexDirection: "column",
         padding: "5%",
-        // gap: 2,
+        gap: 2,
         position: "relative",
       }}
     >
-      {/* {BuyBool && <Loader />} */}
+      {buyBool && <Loader />}
       <Box
         id="Main Container"
-        sx={{ display: "flex", flexDirection: "row", gap: 0 }}
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          gap: 2,
+        }}
       >
         <LeftSide cart={cart} />
         <RightSide cart={cart} />
