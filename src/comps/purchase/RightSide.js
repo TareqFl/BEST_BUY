@@ -157,6 +157,7 @@ const RightSide = ({ cart }) => {
       <Button
         variant="contained"
         sx={{ borderRadius: 24, padding: 2 }}
+        disabled={!cart.length && true}
         onClick={() => {
           setBuyBool(true);
           let element = document.getElementById("payment");

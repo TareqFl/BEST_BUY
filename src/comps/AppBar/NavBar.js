@@ -114,7 +114,7 @@ const NavBar = () => {
                   fontSize: { sm: "0.8rem", md: "1rem" },
                 }}
               >
-                What's New
+                Whats New
               </Typography>
             </ButtonBase>
             <ButtonBase>
