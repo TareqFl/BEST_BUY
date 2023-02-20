@@ -9,12 +9,10 @@ import {
   AccordionSummary,
   AccordionDetails,
   Button,
-  ButtonBase,
 } from "@mui/material";
 import { COLOR } from "@/styles/theme";
 import {
   PersonOutlined,
-  KeyboardArrowDown,
   KeyboardArrowLeft,
   ExpandMore,
 } from "@mui/icons-material";
@@ -22,6 +20,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { User_data } from "@/context";
 import { useRouter } from "next/router";
 import _ from "lodash";
+import Filtering from "../Filtering";
 const CustomDrawer = () => {
   const {
     user,
@@ -30,103 +29,42 @@ const CustomDrawer = () => {
     setHandleDrawer,
     allProducts,
     setSortProducts,
+    info,
+    setInfo,
   } = React.useContext(User_data);
   const router = useRouter();
 
-  const Filtering = ({ filter, value }) => {
-    const [options, setOptions] = React.useState([]);
-    const category = [
-      "smartphones",
-      "laptops",
-      "fragrances",
-      "skincare",
-      "groceries",
-      "home-decoration",
-      "furniture",
-      "tops",
-      "womens-dresses",
-      "womens-shoes",
-      "mens-shirts",
-      "mens-shoes",
-      "mens-watches",
-      "womens-watches",
-      "womens-bags",
-      "womens-jewellery",
-      "sunglasses",
-      "automotive",
-      "motorcycle",
-      "lighting",
-    ];
-    function handleFilter(v) {
-      if (v === "category") {
-        return setOptions([...category]);
-      } else if (v === "brand") {
-        let brands = _.uniq(allProducts.map((prod) => prod.brand));
-        setOptions([...brands]);
-      }
+  // hadnle cart click if its empty displays message
+  function handleCart() {
+    if (!cart.length) {
+      return setInfo(true);
     }
+    return router.push("/purchase");
+  }
 
-    function handleClick(v) {
-      const filteredCategories = allProducts?.filter(
-        (prod) => prod.category === v
-      );
-
-      const filteredBrands = allProducts.filter((prod) => prod.brand === v);
-
-      value === "category"
-        ? setSortProducts(filteredCategories)
-        : setSortProducts(filteredBrands);
-    }
+  const Info = () => {
+    React.useEffect(() => {
+      const time = setTimeout(() => setInfo(false), 1000);
+      return () => clearTimeout(time);
+    }, []);
 
     return (
-      <Accordion
+      <Paper
         sx={{
+          display: "flex",
+          alignItems: "center",
+          position: "absolute",
+          height: info ? "50px" : 0,
+          width: "50px",
+          right: "50px",
+          overflow: "hidden",
           backgroundColor: COLOR.whiteCream,
-          color: COLOR.textColor,
-          svg: { color: COLOR.textColor },
-          width: "90%",
-          borderRadius: "4px",
+          borderRadius: "12px",
+          transition: "all 0.75s",
         }}
       >
-        <AccordionSummary
-          onClick={() => handleFilter(value)}
-          expandIcon={<ExpandMore />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography
-            fontWeight="bold"
-            sx={{ textTransform: "upperCase", textAlign: "center" }}
-          >
-            {filter}
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            overflowY: "auto",
-            maxHeight: "300px",
-            alignItems: "center",
-            gap: 2,
-            backgroundColor: COLOR.primary,
-          }}
-        >
-          {options?.map((optn, index) => {
-            return (
-              <Button
-                key={index}
-                variant="contained"
-                color="whiteCream"
-                onClick={() => handleClick(optn)}
-                fullWidth
-              >
-                {optn}
-              </Button>
-            );
-          })}
-        </AccordionDetails>
-      </Accordion>
+        <Typography fontSize="0.85rem">Empty Cart</Typography>
+      </Paper>
     );
   };
 
@@ -153,7 +91,7 @@ const CustomDrawer = () => {
       }}
       elevation={4}
     >
-      {/* <IconButton
+      <IconButton
         onClick={() => setHandleDrawer(false)}
         size="small"
         sx={{
@@ -161,12 +99,12 @@ const CustomDrawer = () => {
           top: 8,
           right: 10,
           backgroundColor: COLOR.whiteCream,
-          transform: HandleDrawer ? "rotate(180deg)" : "rotate(0deg)",
+          transform: HandleDrawer ? "rotate(0deg)" : "rotate(180deg)",
           transition: "1.25s",
         }}
       >
         <KeyboardArrowLeft />
-      </IconButton> */}
+      </IconButton>
       <Box
         sx={{
           height: "90%",
@@ -190,12 +128,17 @@ const CustomDrawer = () => {
           <IconButton size="large">
             <PersonOutlined fontSize="large" sx={{ color: "white" }} />
           </IconButton>
-          <IconButton size="large" onClick={() => router.push("/purchase")}>
+          <IconButton
+            size="large"
+            onClick={handleCart}
+            sx={{ position: "relative" }}
+          >
             <Badge badgeContent={cart.length} color="error">
               <AiOutlineShoppingCart
                 style={{ fontSize: "2.1875rem", color: "white" }}
               />
             </Badge>
+            <Info />
           </IconButton>
         </Box>
 

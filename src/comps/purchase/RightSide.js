@@ -52,7 +52,7 @@ const RightSide = ({ cart }) => {
     <Paper
       elevation={2}
       sx={{
-        flexGrow: 1,
+        width: { md: "30%" },
         display: "flex",
         flexDirection: "column",
         gap: 4,
@@ -65,7 +65,7 @@ const RightSide = ({ cart }) => {
         },
       }}
     >
-      <Typography sx={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+      <Typography id="payment" sx={{ fontSize: "1.5rem", fontWeight: "bold" }}>
         Payment Details
       </Typography>
 
@@ -157,7 +157,15 @@ const RightSide = ({ cart }) => {
       <Button
         variant="contained"
         sx={{ borderRadius: 24, padding: 2 }}
-        onClick={() => setBuyBool(true)}
+        onClick={() => {
+          setBuyBool(true);
+          let element = document.getElementById("payment");
+          if (element) {
+            element.scrollIntoView({
+              behavior: "smooth",
+            });
+          }
+        }}
       >
         Pay
       </Button>

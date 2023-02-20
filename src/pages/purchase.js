@@ -11,11 +11,11 @@ const Purchase = () => {
   const { buyBool, cart } = React.useContext(User_data);
   const router = useRouter();
 
-  // React.useEffect(() => {
-  //   if (!cart.length) {
-  //     router.push("/");
-  //   }
-  // });
+  React.useEffect(() => {
+    if (!cart.length) {
+      router.push("/");
+    }
+  });
 
   return (
     <Box
@@ -28,12 +28,14 @@ const Purchase = () => {
       }}
     >
       {buyBool && <Loader />}
+
       <Box
         id="Main Container"
         sx={{
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
           gap: 2,
+          justifyContent: { md: "center" },
         }}
       >
         <LeftSide cart={cart} />

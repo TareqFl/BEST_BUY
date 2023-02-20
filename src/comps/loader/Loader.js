@@ -33,6 +33,7 @@ const Loader = () => {
 
   return (
     <Paper
+      id="loader"
       elevation={2}
       sx={{
         display: "flex",
@@ -41,8 +42,8 @@ const Loader = () => {
         backgroundColor: COLOR.whiteCream,
         transition: "1s",
         position: "absolute",
-        height: "50vh",
-        width: "50vw",
+        height: "25vh",
+        width: "35vw",
         zIndex: 1,
         top: "50%",
         left: "50%",
@@ -51,11 +52,23 @@ const Loader = () => {
       }}
     >
       {loader === 1 ? (
-        <Typography sx={{ fontWeight: "bold", fontSize: "2rem" }}>
+        <Typography
+          sx={{
+            fontWeight: "bold",
+            fontSize: { xs: "1rem" },
+            textAlign: "center",
+          }}
+        >
           Awaiting Order...
         </Typography>
       ) : (
-        <Typography sx={{ fontWeight: "bold", fontSize: "2rem" }}>
+        <Typography
+          sx={{
+            fontWeight: "bold",
+            fontSize: { xs: "1rem" },
+            textAlign: "center",
+          }}
+        >
           Purchase Complete!
         </Typography>
       )}

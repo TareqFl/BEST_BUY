@@ -13,6 +13,7 @@ export default function Context({ children }) {
   const [sortProducts, setSortProducts] = useState([]);
   const [HandleDrawer, setHandleDrawer] = useState(false);
   const [buyBool, setBuyBool] = useState(false);
+  const [info, setInfo] = useState(false);
   return (
     <User_data.Provider
       value={{
@@ -30,6 +31,8 @@ export default function Context({ children }) {
         setCart,
         buyBool,
         setBuyBool,
+        info,
+        setInfo,
       }}
     >
       {children}

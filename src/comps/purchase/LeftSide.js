@@ -12,6 +12,8 @@ const LeftSide = ({ cart }) => {
         gap: 4,
         alignItems: "center",
         // overflow: "hidden",
+        width: { md: "30%" },
+        justifySelf: "end",
       }}
     >
       <Paper
