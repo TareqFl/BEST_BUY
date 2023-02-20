@@ -154,7 +154,7 @@ const CustomDrawer = () => {
           color="whiteCream"
           sx={{ fontWeight: "bold", width: "90%" }}
         >
-          What's New
+          Whats New
         </Button>
         <Button
           variant="contained"
