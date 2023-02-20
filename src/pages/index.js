@@ -49,7 +49,7 @@ function Home({ data }) {
       sx={{
         backgroundColor: HandleDrawer ? COLOR.lightPink : "white",
         transition: "0.5s",
-        paddingTop: "25%",
+        paddingTop: { xs: "25%", sm: "5%", md: 0 },
       }}
     >
       {/* <NavBar /> */}
@@ -125,7 +125,7 @@ function Home({ data }) {
           sx={{
             width: "100%",
             alignItems: "center",
-            display: "flex",
+            display: { xs: "none", md: "flex" },
             flexDirection: { xs: "column", sm: "row" },
             justifyContent: "space-between",
             flexWrap: "wrap",
