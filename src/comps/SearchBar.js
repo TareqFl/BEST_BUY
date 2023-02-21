@@ -10,14 +10,14 @@ import {
 } from "@mui/material";
 import { User_data } from "@/context";
 import React from "react";
-import { width } from "@mui/system";
 import { useRouter } from "next/router";
 import _ from "lodash";
 import { ClickAwayListener } from "@mui/base";
+import { setCookie } from "cookies-next";
 const SearchBar = () => {
   const router = useRouter();
 
-  const { search, setSearch, allProducts } = React.useContext(User_data);
+  const { search, setSearch, allProducts, setQ } = React.useContext(User_data);
   const [clicked, setClicked] = React.useState(false);
   const [keyWord, setKeyWord] = React.useState("");
 
@@ -88,7 +88,10 @@ const SearchBar = () => {
                   backgroundColor: COLOR.charcoalLight,
                 }}
                 onClick={() => {
-                  router.push(`/product?id=${prd.id}`);
+                  setQ(prd.id);
+                  setCookie("id", { id: prd.id }, { maxAge: 5000 });
+                  router.push("/product");
+                  // router.push(`/product?id=${prd.id}`);
                   setClicked(false);
                   setKeyWord("");
                 }}
