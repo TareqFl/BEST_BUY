@@ -9,9 +9,7 @@ async function mongoConnect() {
   connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  })
-    .then(() => console.log("connected to dataBase"))
-    .catch((err) => console.log(err));
+  }).catch((err) => err);
 }
 
 export default mongoConnect;
