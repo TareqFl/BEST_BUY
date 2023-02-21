@@ -65,7 +65,7 @@ const Product = ({ Product }) => {
 
 export default Product;
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
   const response = await fetch(`http://localhost:3000/api/singleProduct`, {
     method: "POST",
     body: JSON.stringify({ id: context.query.id }),

@@ -45,7 +45,6 @@ function Home() {
 
     // eslint-disable-next-line
   }, []);
-  console.log(data);
   return (
     <Box
       sx={{
