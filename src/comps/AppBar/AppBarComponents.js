@@ -4,7 +4,7 @@ import React from "react";
 import NavBar from "./NavBar";
 import { User_data } from "@/context";
 import { getCookie, setCookie } from "cookies-next";
-
+import data from "../../localDB";
 const AppBarComponents = ({ children }) => {
   const {
     HandleDrawer,
@@ -16,10 +16,11 @@ const AppBarComponents = ({ children }) => {
 
   React.useEffect(() => {
     if (!allProducts) {
-      fetch("http://localhost:3000/api/product")
-        .then((response) => response.json())
-        .then((data) => setAllProducts(data))
-        .catch((err) => console.log(err));
+      // fetch("http://localhost:3000/api/product")
+      //   .then((response) => response.json())
+      //   .then((data) => setAllProducts(data))
+      //   .catch((err) => console.log(err));
+      setAllProducts(data);
     }
 
     let stored_Cart = getCookie("cart");

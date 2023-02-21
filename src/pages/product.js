@@ -2,8 +2,24 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import LeftSide from "@/comps/Product/LeftSide";
 import RightSide from "@/comps/Product/RightSide";
+import { useRouter } from "next/router";
+import data from "../localDB";
+// const Product = ({ Product }) => {
+const Product = () => {
+  const route = useRouter();
 
-const Product = ({ Product }) => {
+  const [Product, setProduct] = React.useState({});
+
+  React.useEffect(() => {
+    const id = route.query.id;
+    let foundProduct = data.find((item) => item.id === Number(id));
+    if (foundProduct) {
+      setProduct(foundProduct);
+    }
+
+    //eslint-disable-next-line
+  }, []);
+
   const {
     brand,
     category,
@@ -65,16 +81,16 @@ const Product = ({ Product }) => {
 
 export default Product;
 
-export async function getStaticProps(context) {
-  const response = await fetch(`http://localhost:3000/api/singleProduct`, {
-    method: "POST",
-    body: JSON.stringify({ id: context.query.id }),
-  });
-  const data = await response.json();
+// export async function getStaticProps(context) {
+//   const response = await fetch(`http://localhost:3000/api/singleProduct`, {
+//     method: "POST",
+//     body: JSON.stringify({ id: context.query.id }),
+//   });
+//   const data = await response.json();
 
-  return {
-    props: {
-      Product: data,
-    },
-  };
-}
+//   return {
+//     props: {
+//       Product: data,
+//     },
+//   };
+// }
