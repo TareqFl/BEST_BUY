@@ -12,14 +12,14 @@ export default async function handleProducts(req, res) {
         return res.status(200).json(resp);
       }
     } catch (error) {
-      res.send(200).json({ message: error.message });
+      res.send(400).json({ message: error.message });
     }
   } else {
     try {
       const resp = await Products.find();
       return res.status(200).json(resp);
     } catch (error) {
-      res.send(200).json({ message: error.message });
+      res.send(400).json({ message: error.message });
     }
   }
 }

@@ -16,7 +16,7 @@ const AppBarComponents = ({ children }) => {
 
   React.useEffect(() => {
     if (!allProducts) {
-      fetch("http://192.168.1.16:3000/api/product")
+      fetch("http://localhost:3000/api/product")
         .then((response) => response.json())
         .then((data) => setAllProducts(data))
         .catch((err) => console.log(err));
