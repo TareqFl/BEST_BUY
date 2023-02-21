@@ -13,6 +13,8 @@ import { Slide } from "@mui/material";
 import Link from "next/link";
 import { COLOR } from "@/styles/theme";
 import { User_data } from "@/context";
+import { useRouter } from "next/router";
+import { setCookie } from "cookies-next";
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -25,13 +27,14 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function RecipeReviewCard({ Product, value }) {
-  const { HandleDrawer } = React.useContext(User_data);
+  const { HandleDrawer, setQ, q } = React.useContext(User_data);
 
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const router = useRouter();
 
   const { id, title, description, price, discountPercentage, thumbnail } =
     Product;
@@ -56,7 +59,7 @@ export default function RecipeReviewCard({ Product, value }) {
       }}
     >
       <Slide in={value} timeout={1000} direction="up" unmountOnExit>
-        <Link
+        {/* <Link
           href={{
             pathname: "/product",
             query: {
@@ -65,7 +68,17 @@ export default function RecipeReviewCard({ Product, value }) {
           }}
         >
           <CardMedia component="img" image={thumbnail} alt={title} />
-        </Link>
+        </Link> */}
+        <CardMedia
+          component="img"
+          image={thumbnail}
+          alt={title}
+          onClick={() => {
+            setCookie("id", { id }, { maxAge: 5000 });
+            setQ(id);
+            router.push("/product");
+          }}
+        />
       </Slide>
       <CardHeader
         action={

@@ -14,6 +14,7 @@ export default function Context({ children }) {
   const [HandleDrawer, setHandleDrawer] = useState(false);
   const [buyBool, setBuyBool] = useState(false);
   const [info, setInfo] = useState(false);
+  const [q, setQ] = useState(0);
   return (
     <User_data.Provider
       value={{
@@ -33,6 +34,8 @@ export default function Context({ children }) {
         setBuyBool,
         info,
         setInfo,
+        q,
+        setQ,
       }}
     >
       {children}

@@ -4,16 +4,26 @@ import LeftSide from "@/comps/Product/LeftSide";
 import RightSide from "@/comps/Product/RightSide";
 import { useRouter } from "next/router";
 import data from "../localDB";
+import { User_data } from "@/context";
+import { getCookie } from "cookies-next";
 // const Product = ({ Product }) => {
 const Product = () => {
-  const route = useRouter();
+  const { q } = React.useContext(User_data);
 
   const [Product, setProduct] = React.useState({});
-
-  React.useEffect(() => {
-    const id = route.query.id;
-    let foundProduct = data.find((item) => item.id === Number(id));
-    if (foundProduct) {
+  const router = useRouter();
+  React.useLayoutEffect(() => {
+    let qId = getCookie("id");
+    const { id } = JSON.parse(qId);
+    let foundProduct = data.find((item) => item.id === id);
+    if (!q) {
+      if (foundProduct) {
+        setProduct(foundProduct);
+      } else {
+        router.push("/");
+      }
+    } else {
+      let foundProduct = data.find((item) => item.id === q);
       setProduct(foundProduct);
     }
 
@@ -64,7 +74,7 @@ const Product = () => {
           gap: { xs: 1, sm: 4, md: 8 },
         }}
       >
-        <LeftSide images={images} Product={Product} />
+        <LeftSide images={images ? images : ""} Product={Product} />
         {/* RIGHT SIDE */}
         <RightSide
           title={title}

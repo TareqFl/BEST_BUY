@@ -4,7 +4,7 @@ import React from "react";
 
 const SecondaryImages = ({ Product, MyStyle, onClick }) => (
   <Box id="Secondary Displays" sx={MyStyle}>
-    {Product?.images.map((img, index) => {
+    {Product?.images?.map((img, index) => {
       return (
         <ButtonBase
           onClick={() => onClick(index)}

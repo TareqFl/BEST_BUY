@@ -3,7 +3,6 @@ import LeftSide from "@/comps/purchase/LeftSide";
 import RightSide from "@/comps/purchase/RightSide";
 import { User_data } from "@/context";
 import { Box } from "@mui/material";
-import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import React from "react";
 
