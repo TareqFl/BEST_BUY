@@ -9,7 +9,9 @@ import CategoryButton from "@/comps/CategoryButton";
 import CustomCard from "@/comps/CustomCard";
 import Footer from "@/comps/Footer";
 import { User_data } from "@/context";
-function Home({ data }) {
+import data from "../localDB";
+// function Home({ data }) {
+function Home() {
   const router = useRouter();
 
   const { HandleDrawer, setAllProducts, setSortProducts } =
@@ -42,8 +44,8 @@ function Home({ data }) {
     }
 
     // eslint-disable-next-line
-  }, [data]);
-
+  }, []);
+  console.log(data);
   return (
     <Box
       sx={{
@@ -201,26 +203,26 @@ function Home({ data }) {
 
 export default Home;
 
-export async function getServerSideProps({ req, res }) {
-  try {
-    // const cookieFound = hasCookie("token", { req, res });
-    // if (!cookieFound) {
-    //   return {
-    //     redirect: {
-    //       destination: "/login",
-    //     },
-    //   };
-    // }
+// export async function getServerSideProps({ req, res }) {
+//   try {
+// const cookieFound = hasCookie("token", { req, res });
+// if (!cookieFound) {
+//   return {
+//     redirect: {
+//       destination: "/login",
+//     },
+//   };
+// }
 
-    const getProducts = await fetch("http://localhost:3000/api/product");
-    const data = await getProducts.json();
+//     const getProducts = await fetch("http://localhost:3000/api/product");
+//     const data = await getProducts.json();
 
-    return {
-      props: { data },
-    };
-  } catch (error) {
-    return {
-      props: { err: error.message },
-    };
-  }
-}
+//     return {
+//       props: { data },
+//     };
+//   } catch (error) {
+//     return {
+//       props: { err: error.message },
+//     };
+//   }
+// }
