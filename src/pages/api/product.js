@@ -10,7 +10,8 @@ export default async function handleProducts(req, res) {
     if (resp) {
       return res.status(200).json(resp);
     }
+  } else {
+    const resp = await Products.find();
+    return res.status(200).json(resp);
   }
-  const resp = await Products.find();
-  return res.status(200).json(resp);
 }
