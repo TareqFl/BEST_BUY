@@ -73,6 +73,7 @@ export default function RecipeReviewCard({ Product, value }) {
           component="img"
           image={thumbnail}
           alt={title}
+          sx={{ cursor: "pointer" }}
           onClick={() => {
             setCookie("id", { id }, { maxAge: 5000 });
             setQ(id);
