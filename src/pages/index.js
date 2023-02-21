@@ -210,9 +210,11 @@ export async function getServerSideProps({ req, res }) {
     //       destination: "/login",
     //     },
     //   };
-    // }
+    // }https://demo-best-buy.netlify.app/
 
-    const getProducts = await fetch("http://localhost:3000/api/product");
+    const getProducts = await fetch(
+      "https://demo-best-buy.netlify.app/api/product"
+    );
     const data = await getProducts.json();
 
     return {
