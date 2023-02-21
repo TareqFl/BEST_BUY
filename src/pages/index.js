@@ -215,9 +215,6 @@ export async function getServerSideProps({ req, res }) {
     const getProducts = await fetch("http://localhost:3000/api/product");
     const data = await getProducts.json();
 
-    // const getCategories = await fetch("http://localhost:3000/api/category");
-    // const categ = await getCategories.json();
-
     return {
       props: { data },
     };

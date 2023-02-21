@@ -33,19 +33,8 @@ export default function RecipeReviewCard({ Product, value }) {
     setExpanded(!expanded);
   };
 
-  const {
-    id,
-    title,
-    description,
-    price,
-    discountPercentage,
-    rating,
-    stock,
-    brand,
-    category,
-    thumbnail,
-    images,
-  } = Product;
+  const { id, title, description, price, discountPercentage, thumbnail } =
+    Product;
 
   return (
     <Card
@@ -79,13 +68,6 @@ export default function RecipeReviewCard({ Product, value }) {
         </Link>
       </Slide>
       <CardHeader
-        // avatar={
-        //   <Avatar
-        //     src={thumbnail}
-        //     sx={{ bgcolor: red[500] }}
-        //     aria-label="recipe"
-        //   />
-        // }
         action={
           <IconButton aria-label="settings">
             {/* <Add color={COLOR.primary} /> */}
@@ -99,12 +81,6 @@ export default function RecipeReviewCard({ Product, value }) {
       />
 
       <CardActions disableSpacing>
-        {/* <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton> */}
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}

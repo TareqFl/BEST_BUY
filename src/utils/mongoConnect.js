@@ -1,8 +1,17 @@
 import { connect, set } from "mongoose";
 
 async function mongoConnect() {
+  const uri =
+    "mongodb+srv://admin-tareq:Tareq123@cluster0.ycu8b.mongodb.net/?retryWrites=true&w=majority";
+
   set("strictQuery", false);
-  await connect("mongodb://127.0.0.1:27017/NextAuthDB");
+
+  connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+    .then(() => console.log("connected to dataBase"))
+    .catch((err) => console.log(err));
 }
 
 export default mongoConnect;
